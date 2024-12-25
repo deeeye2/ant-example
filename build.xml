@@ -1,0 +1,44 @@
+<project name="AntExample" basedir="." default="build">
+
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="web.dir" value="web"/>
+    <property name="dist.dir" value="dist"/>
+    <property name="artifact.name" value="ant-example.war"/>
+
+    <!-- Clean Task -->
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+
+    <!-- Compile Java Files -->
+    <target name="compile" depends="clean">
+        <mkdir dir="${build.dir}/WEB-INF/classes"/>
+        <javac srcdir="${src.dir}" destdir="${build.dir}/WEB-INF/classes" includeantruntime="true">
+            <include name="**/*.java"/>
+        </javac>
+    </target>
+
+    <!-- Copy Web Files -->
+    <target name="copy-web" depends="compile">
+        <mkdir dir="${build.dir}/WEB-INF"/>
+        <copy todir="${build.dir}">
+            <fileset dir="${web.dir}"/>
+        </copy>
+    </target>
+
+    <!-- Package WAR -->
+    <target name="package" depends="copy-web">
+        <mkdir dir="${dist.dir}"/>
+        <war destfile="${dist.dir}/${artifact.name}" webxml="${build.dir}/WEB-INF/web.xml">
+            <fileset dir="${build.dir}"/>
+        </war>
+    </target>
+
+    <!-- Default Task -->
+    <target name="build" depends="package">
+        <echo message="Build complete! WAR file created: ${dist.dir}/${artifact.name}"/>
+    </target>
+
+</project>
