@@ -6,6 +6,9 @@
     <property name="dist.dir" value="dist"/>
     <property name="artifact.name" value="ant-example.war"/>
 
+    <!-- Path to Servlet API -->
+    <property name="servlet-api.jar" value="/usr/share/java/servlet-api.jar"/>
+
     <!-- Clean Task -->
     <target name="clean">
         <delete dir="${build.dir}"/>
@@ -16,6 +19,9 @@
     <target name="compile" depends="clean">
         <mkdir dir="${build.dir}/WEB-INF/classes"/>
         <javac srcdir="${src.dir}" destdir="${build.dir}/WEB-INF/classes" includeantruntime="true">
+            <classpath>
+                <pathelement location="${servlet-api.jar}"/>
+            </classpath>
             <include name="**/*.java"/>
         </javac>
     </target>
@@ -42,3 +48,4 @@
     </target>
 
 </project>
+
