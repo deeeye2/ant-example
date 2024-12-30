@@ -1,9 +1,10 @@
-<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="HelloWorld Test Suite">
-    <test name="HelloWorld Functionality Test">
+<suite name="HelloWorld Test Suite" verbose="1">
+    <listeners>
+        <listener class-name="org.testng.reporters.XMLReporter" />
+    </listeners>
+    <test name="HelloWorld Test">
         <classes>
-            <!-- Reference the HelloWorld class in the compiled directory -->
-            <class name="com.example.HelloWorld"/>
+            <class name="com.example.HelloWorld" />
         </classes>
     </test>
 </suite>
