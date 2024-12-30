@@ -22,6 +22,7 @@
         <javac srcdir="${src.dir}" destdir="${build.dir}/WEB-INF/classes" includeantruntime="true">
             <classpath>
                 <pathelement location="${servlet-api.jar}"/>
+                <pathelement location="${testng.jar}"/>
             </classpath>
             <include name="**/*.java"/>
         </javac>
