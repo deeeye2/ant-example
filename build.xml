@@ -1,54 +1,66 @@
-<project name="AntExample" basedir="." default="build">
+<project name="AutomatedBuildAndTest" basedir="." default="run-tests">
 
+    <!-- Define properties -->
     <property name="src.dir" value="src"/>
     <property name="build.dir" value="build"/>
-    <property name="web.dir" value="web"/>
     <property name="dist.dir" value="dist"/>
-    <property name="artifact.name" value="ant-example.war"/>
-
-    <!-- Paths to JARs -->
     <property name="servlet-api.jar" value="/usr/share/java/servlet-api.jar"/>
-    <property name="testng.jar" value="lib/testng-7.7.1.jar"/>
 
-    <!-- Clean Task -->
+    <!-- Clean Target -->
     <target name="clean">
         <delete dir="${build.dir}"/>
         <delete dir="${dist.dir}"/>
+        <delete dir="lib"/>
     </target>
 
-    <!-- Compile Java Files -->
-    <target name="compile" depends="clean">
+    <!-- Fetch Dependencies -->
+    <target name="fetch-dependencies">
+        <mkdir dir="lib"/>
+        <get src="https://repo1.maven.org/maven2/org/testng/testng/7.7.1/testng-7.7.1.jar"
+             dest="lib/testng-7.7.1.jar" />
+    </target>
+
+    <!-- Compile Main Code -->
+    <target name="compile" depends="clean,fetch-dependencies">
         <mkdir dir="${build.dir}/WEB-INF/classes"/>
         <javac srcdir="${src.dir}" destdir="${build.dir}/WEB-INF/classes" includeantruntime="true">
             <classpath>
                 <pathelement location="${servlet-api.jar}"/>
-                <pathelement location="${testng.jar}"/>
+                <fileset dir="lib">
+                    <include name="*.jar"/>
+                </fileset>
             </classpath>
             <include name="**/*.java"/>
         </javac>
     </target>
 
-    <!-- Copy Web Files -->
-    <target name="copy-web" depends="compile">
-        <mkdir dir="${build.dir}/WEB-INF"/>
-        <copy todir="${build.dir}">
-            <fileset dir="${web.dir}"/>
-        </copy>
+    <!-- Compile Test Code -->
+    <target name="compile-tests" depends="compile">
+        <mkdir dir="${build.dir}/test-classes"/>
+        <javac srcdir="${src.dir}/test" destdir="${build.dir}/test-classes" includeantruntime="true">
+            <classpath>
+                <pathelement location="${servlet-api.jar}"/>
+                <fileset dir="lib">
+                    <include name="*.jar"/>
+                </fileset>
+            </classpath>
+            <include name="**/*.java"/>
+        </javac>
     </target>
 
-    <!-- Package WAR -->
-    <target name="package" depends="copy-web">
-        <mkdir dir="${dist.dir}"/>
-        <war destfile="${dist.dir}/${artifact.name}" webxml="${build.dir}/WEB-INF/web.xml">
-            <fileset dir="${build.dir}"/>
-        </war>
+    <!-- Run Tests -->
+    <target name="run-tests" depends="compile-tests">
+        <java classname="org.testng.TestNG" fork="true">
+            <classpath>
+                <pathelement location="${build.dir}/test-classes"/>
+                <pathelement location="${build.dir}/WEB-INF/classes"/>
+                <fileset dir="lib">
+                    <include name="*.jar"/>
+                </fileset>
+            </classpath>
+            <arg value="testng.xml"/>
+        </java>
     </target>
-
-    <!-- Default Task -->
-    <target name="build" depends="package">
-        <echo message="Build complete! WAR file created: ${dist.dir}/${artifact.name}"/>
-    </target>
-
 </project>
 
 
