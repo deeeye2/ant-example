@@ -1,5 +1,6 @@
 <project name="AntExample" basedir="." default="build">
 
+    <!-- Define properties -->
     <property name="src.dir" value="src"/>
     <property name="build.dir" value="build"/>
     <property name="web.dir" value="web"/>
@@ -67,5 +68,6 @@
     </target>
 
 </project>
+
 
 
