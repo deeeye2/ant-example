@@ -1,15 +1,15 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="HelloWorld Test Suite" use-default-listeners="false" verbose="1">
     <listeners>
-        <!-- Explicitly specify XMLReporter -->
         <listener class-name="org.testng.reporters.XMLReporter" />
     </listeners>
     <test name="HelloWorld Test">
         <classes>
-            <class name="com.example.HelloWorld" />
+            <class name="com.example.HelloWorldTest" />
         </classes>
     </test>
 </suite>
+
 
 
 
