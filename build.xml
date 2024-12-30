@@ -7,7 +7,7 @@
     <property name="dist.dir" value="dist"/>
     <property name="artifact.name" value="ant-example.war"/>
     <property name="servlet-api.jar" value="/usr/share/java/servlet-api.jar"/>
-    <property name="testng.jar" value="/path/to/testng-7.5.jar"/>
+    <property name="testng.jar" value="/usr/share/java/testng-7.5.jar"/>
 
     <!-- Clean Task -->
     <target name="clean">
@@ -66,6 +66,7 @@
     </target>
 
 </project>
+
 
 
 
