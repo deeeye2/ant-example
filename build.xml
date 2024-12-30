@@ -6,8 +6,9 @@
     <property name="dist.dir" value="dist"/>
     <property name="artifact.name" value="ant-example.war"/>
 
-    <!-- Path to Servlet API -->
+    <!-- Paths to JARs -->
     <property name="servlet-api.jar" value="/usr/share/java/servlet-api.jar"/>
+    <property name="testng.jar" value="lib/testng-7.7.1.jar"/>
 
     <!-- Clean Task -->
     <target name="clean">
@@ -21,6 +22,7 @@
         <javac srcdir="${src.dir}" destdir="${build.dir}/WEB-INF/classes" includeantruntime="true">
             <classpath>
                 <pathelement location="${servlet-api.jar}"/>
+                <pathelement location="${testng.jar}"/>
             </classpath>
             <include name="**/*.java"/>
         </javac>
@@ -48,6 +50,7 @@
     </target>
 
 </project>
+
 
 
 
