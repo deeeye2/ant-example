@@ -8,6 +8,7 @@
     <property name="artifact.name" value="ant-example.war"/>
     <property name="servlet-api.jar" value="/usr/share/java/servlet-api.jar"/>
     <property name="testng.jar" value="/usr/share/java/testng-7.5.jar"/>
+    <property name="jcommander.jar" value="/usr/share/java/jcommander-1.82.jar"/>
 
     <!-- Clean Task -->
     <target name="clean">
@@ -22,6 +23,7 @@
             <classpath>
                 <pathelement location="${servlet-api.jar}"/>
                 <pathelement location="${testng.jar}"/>
+                <pathelement location="${jcommander.jar}"/>
             </classpath>
             <include name="**/*.java"/>
         </javac>
@@ -50,6 +52,7 @@
             <classpath>
                 <pathelement location="${build.dir}/WEB-INF/classes"/>
                 <pathelement location="${testng.jar}"/>
+                <pathelement location="${jcommander.jar}"/>
                 <pathelement location="${servlet-api.jar}"/>
             </classpath>
             <arg value="testng.xml"/>
