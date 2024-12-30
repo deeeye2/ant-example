@@ -1,4 +1,4 @@
-<project name="AutomatedBuildAndTest" basedir="." default="run-tests">
+<project name="AutomatedBuildAndTest" basedir="." default="build">
 
     <!-- Define properties -->
     <property name="src.dir" value="src"/>
@@ -61,6 +61,12 @@
             <arg value="testng.xml"/>
         </java>
     </target>
+
+    <!-- Build Target -->
+    <target name="build" depends="run-tests">
+        <echo message="Build and test process completed successfully."/>
+    </target>
+
 </project>
 
 
