@@ -1,6 +1,7 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="HelloWorld Test Suite">
     <listeners>
+        <!-- Use XMLReporter to avoid jq HTML Reporter -->
         <listener class-name="org.testng.reporters.XMLReporter" />
     </listeners>
     <test name="HelloWorld Test">
@@ -9,5 +10,6 @@
         </classes>
     </test>
 </suite>
+
 
 
