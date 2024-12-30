@@ -6,8 +6,9 @@
     <property name="dist.dir" value="dist"/>
     <property name="artifact.name" value="ant-example.war"/>
 
-    <!-- Path to Servlet API -->
+    <!-- Paths to dependencies -->
     <property name="servlet-api.jar" value="/usr/share/java/servlet-api.jar"/>
+    <property name="testng.jar" value="/path/to/testng-7.5.jar"/>
 
     <!-- Clean Task -->
     <target name="clean">
@@ -42,10 +43,28 @@
         </war>
     </target>
 
+    <!-- Run TestNG Tests -->
+    <target name="test" depends="compile">
+        <echo message="Running TestNG tests..."/>
+        <java classname="org.testng.TestNG" fork="true" failonerror="true">
+            <classpath>
+                <pathelement location="${build.dir}/WEB-INF/classes"/>
+                <pathelement location="${testng.jar}"/>
+                <pathelement location="${servlet-api.jar}"/>
+            </classpath>
+            <arg value="testng.xml"/>
+        </java>
+        <mkdir dir="${build.dir}/reports"/>
+        <copy todir="${build.dir}/reports">
+            <fileset dir="test-output"/>
+        </copy>
+    </target>
+
     <!-- Default Task -->
-    <target name="build" depends="package">
-        <echo message="Build complete! WAR file created: ${dist.dir}/${artifact.name}"/>
+    <target name="build" depends="test,package">
+        <echo message="Build and tests complete! WAR file created: ${dist.dir}/${artifact.name}"/>
     </target>
 
 </project>
+
 
